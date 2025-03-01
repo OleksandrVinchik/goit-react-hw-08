@@ -4,12 +4,12 @@ import styles from "./ContactForm.module.css";
 
 const validationSchema = Yup.object().shape({
   name: Yup.string()
-    .min(3, "Мінімум 3 символи")
-    .max(50, "Максимум 50 символів")
-    .required("Обов'язкове поле"),
+    .min(3, "min 3 symbols")
+    .max(50, "max 50 symbols")
+    .required("Required"),
   number: Yup.string()
-    .matches(/^\d{3}-\d{2}-\d{2}$/, "Формат: 123-45-67")
-    .required("Обов'язкове поле"),
+    .matches(/^\d{3}-\d{2}-\d{2}$/, "Format: 123-45-67")
+    .required("Required"),
 });
 
 export default function ContactForm({ onAddContact }) {
@@ -37,7 +37,9 @@ export default function ContactForm({ onAddContact }) {
             className={styles.error}
           />
         </label>
-        <button type="submit">Add contact</button>
+        <button type="submit" className={styles.addButton}>
+          Add contact
+        </button>
       </Form>
     </Formik>
   );
