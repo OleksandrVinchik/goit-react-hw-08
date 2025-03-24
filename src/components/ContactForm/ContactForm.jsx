@@ -4,8 +4,8 @@ import styles from "./ContactForm.module.css";
 
 const validationSchema = Yup.object().shape({
   name: Yup.string()
-    .min(3, "min 3 symbols")
-    .max(50, "max 50 symbols")
+    .min(3, "Min 3 characters")
+    .max(50, "Max 50 characters")
     .required("Required"),
   number: Yup.string()
     .matches(/^\d{3}-\d{2}-\d{2}$/, "Format: 123-45-67")
