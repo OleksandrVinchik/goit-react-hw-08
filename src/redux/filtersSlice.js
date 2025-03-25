@@ -13,4 +13,4 @@ const filtersSlice = createSlice({
 });
 
 export const { changeFilter } = filtersSlice.actions;
-export const filtersReducer = filtersSlice.reducer; // ✅ Додаємо правильний експорт
+export const filtersReducer = filtersSlice.reducer;

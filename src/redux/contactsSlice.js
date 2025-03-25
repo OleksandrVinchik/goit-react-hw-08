@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
-// Початкові контакти
 const initialContacts = [
   { id: "id-1", name: "Rosie Simpson", number: "459-12-56" },
   { id: "id-2", name: "Hermione Kline", number: "443-89-12" },
@@ -13,7 +12,7 @@ const initialContacts = [
 const contactsSlice = createSlice({
   name: "contacts",
   initialState: {
-    items: initialContacts, // Завантажуємо початкові контакти
+    items: initialContacts,
   },
   reducers: {
     addContact: (state, action) => {
@@ -29,11 +28,10 @@ const contactsSlice = createSlice({
 
 export const { addContact, deleteContact } = contactsSlice.actions;
 
-// Налаштування для redux-persist
 const persistConfig = {
   key: "contacts",
   storage,
-  whitelist: ["items"], // Зберігати тільки поле items
+  whitelist: ["items"],
 };
 
 export const contactsReducer = persistReducer(
