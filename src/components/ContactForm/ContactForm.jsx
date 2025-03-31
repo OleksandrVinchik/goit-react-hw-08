@@ -1,8 +1,8 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
-import { addContact } from "../../redux/contactsSlice";
-import { nanoid } from "nanoid";
+import { addContact } from "../../redux/contactsOps";
+import { selectContacts } from "../../redux/contactsSlice";
 import styles from "./ContactForm.module.css";
 
 const validationSchema = Yup.object().shape({
@@ -17,20 +17,19 @@ const validationSchema = Yup.object().shape({
 
 export default function ContactForm() {
   const dispatch = useDispatch();
-  const contacts = useSelector((state) => state.contacts.items);
+  const contacts = useSelector(selectContacts);
 
   const handleSubmit = (values, actions) => {
-    const isDuplicate = contacts.some(
-      (contact) => contact.name.toLowerCase() === values.name.toLowerCase()
-    );
-
-    if (isDuplicate) {
+    if (
+      contacts.some(
+        (contact) => contact.name.toLowerCase() === values.name.toLowerCase()
+      )
+    ) {
       alert(`${values.name} is already in contacts!`);
       return;
     }
 
-    const newContact = { id: nanoid(), ...values };
-    dispatch(addContact(newContact));
+    dispatch(addContact(values));
     actions.resetForm();
   };
 
@@ -42,13 +41,11 @@ export default function ContactForm() {
     >
       <Form className={styles.form}>
         <label>
-          Name:
-          <Field type="text" name="name" />
+          Name: <Field type="text" name="name" />
           <ErrorMessage name="name" component="div" className={styles.error} />
         </label>
         <label>
-          Number:
-          <Field type="text" name="number" />
+          Number: <Field type="text" name="number" />
           <ErrorMessage
             name="number"
             component="div"
