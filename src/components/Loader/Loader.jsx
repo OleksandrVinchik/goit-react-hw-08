@@ -1,10 +1,10 @@
-import { ThreeDots } from "react-loader-spinner";
-import styles from "./Loader.module.css";
+import React from "react";
+import styles from "./Loader.module.css"; // Подключаем модульные стили
 
 const Loader = () => {
   return (
-    <div className={styles.loader}>
-      <ThreeDots color="#4fa94d" height={80} width={80} />
+    <div className={styles.loaderContainer}>
+      <div className={styles.loader}></div>
     </div>
   );
 };
