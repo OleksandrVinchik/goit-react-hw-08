@@ -1,18 +1,28 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2px;
-  text-align: center;
+.form {
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 0px;
 }
-
-.container {
-  width: 400px;
+.label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+.input {
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.button {
+  padding: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.appContainer {
+  max-width: 1200px;
   margin: 0 auto;
-  text-align: center;
   font-family: Arial, sans-serif;
-}
-
-.title {
-  font-size: 24px;
-  color: #333;
 }

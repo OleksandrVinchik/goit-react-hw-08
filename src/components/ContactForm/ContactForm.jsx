@@ -1,61 +1,78 @@
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addContact } from "../../redux/contactsOps";
-import { selectContacts } from "../../redux/contactsSlice";
+import { addContact } from "../../redux/contacts/operations";
 import styles from "./ContactForm.module.css";
 
-const validationSchema = Yup.object().shape({
-  name: Yup.string()
-    .min(3, "Min 3 characters")
-    .max(50, "Max 50 characters")
-    .required("Required"),
-  number: Yup.string()
-    .matches(/^\d{3}-\d{2}-\d{2}$/, "Format: 123-45-67")
-    .required("Required"),
-});
-
-export default function ContactForm() {
+const ContactForm = () => {
+  const [name, setName] = useState("");
+  const [number, setNumber] = useState("");
+  const [errors, setErrors] = useState({ name: "", number: "" });
+  const contacts = useSelector((state) => state.contacts.items);
   const dispatch = useDispatch();
-  const contacts = useSelector(selectContacts);
 
-  const handleSubmit = (values, actions) => {
-    if (
-      contacts.some(
-        (contact) => contact.name.toLowerCase() === values.name.toLowerCase()
-      )
-    ) {
-      alert(`${values.name} is already in contacts!`);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    let newErrors = { name: "", number: "" };
+
+    if (!name.trim()) {
+      newErrors.name = "Required";
+    }
+
+    if (!number.trim()) {
+      newErrors.number = "Required";
+    } else if (!/^\+?\d{7,15}$/.test(number)) {
+      newErrors.number = "Not avaid Number";
+    }
+
+    if (newErrors.name || newErrors.number) {
+      setErrors(newErrors);
       return;
     }
 
-    dispatch(addContact(values));
-    actions.resetForm();
+    const isDuplicate = contacts.some(
+      (contact) =>
+        typeof contact.name === "string" &&
+        contact.name.toLowerCase() === name.toLowerCase()
+    );
+
+    if (isDuplicate) {
+      alert(`${name} вже є у списку!`);
+      return;
+    }
+
+    dispatch(addContact({ name, number }));
+
+    setName("");
+    setNumber("");
+    setErrors({ name: "", number: "" });
   };
 
   return (
-    <Formik
-      initialValues={{ name: "", number: "" }}
-      validationSchema={validationSchema}
-      onSubmit={handleSubmit}
-    >
-      <Form className={styles.form}>
-        <label>
-          Name: <Field type="text" name="name" />
-          <ErrorMessage name="name" component="div" className={styles.error} />
-        </label>
-        <label>
-          Number: <Field type="text" name="number" />
-          <ErrorMessage
-            name="number"
-            component="div"
-            className={styles.error}
-          />
-        </label>
-        <button type="submit" className={styles.addButton}>
-          Add contact
-        </button>
-      </Form>
-    </Formik>
+    <form onSubmit={handleSubmit} className={styles.form}>
+      <label>
+        Name:
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        {errors.name && <p className={styles.error}>{errors.name}</p>}
+      </label>
+
+      <label>
+        Number:
+        <input
+          type="text"
+          value={number}
+          onChange={(e) => setNumber(e.target.value)}
+        />
+        {errors.number && <p className={styles.error}>{errors.number}</p>}
+      </label>
+
+      <button type="submit">Add Contact</button>
+    </form>
   );
-}
+};
+
+export default ContactForm;
