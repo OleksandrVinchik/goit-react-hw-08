@@ -1,0 +1,119 @@
+.contactCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #fefefe;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+}
+
+.title {
+  font-size: 28px;
+  color: #ffffff;
+  margin-bottom: 15px;
+  background-color: #78db9e;
+  padding: 30px 50px;
+  border-radius: 20px;
+  justify-items: center;
+  align-items: center;
+}
+
+.contactsList {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  padding: 20px;
+  width: 100%;
+  justify-items: center;
+}
+
+.contactItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px;
+  width: 180px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  transition: background-color 0.3s;
+  position: relative;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.contactItem:hover {
+  background-color: #e9e9e9;
+}
+
+.name {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.number {
+  font-size: 14px;
+  color: #555;
+  margin-top: 5px;
+}
+
+.deleteButton {
+  margin-top: 10px;
+  background-color: #fa1717;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.deleteButton:hover {
+  background-color: #910000;
+}
+
+.noContacts {
+  text-align: center;
+  color: gray;
+  font-size: 14px;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modalContent {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.confirmButton {
+  background: red;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  margin: 5px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.cancelButton {
+  background: gray;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  margin: 5px;
+  cursor: pointer;
+  border-radius: 5px;
+}
