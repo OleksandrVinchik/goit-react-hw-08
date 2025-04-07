@@ -24,7 +24,6 @@ const ContactsPage = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(selectContacts) || [];
   const filter = useSelector(selectFilter) || "";
-
   const [deleteId, setDeleteId] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [editContact, setEditContact] = useState(null);
@@ -71,19 +70,16 @@ const ContactsPage = () => {
     const form = e.target;
     const name = form.elements.name.value.trim();
     const number = form.elements.number.value.trim();
-
     if (!name || !number) {
       toast.error("Please fill in all fields!");
       return;
     }
-
     try {
       await dispatch(addContact({ name, number })).unwrap();
       toast.success("Contact added successfully!");
     } catch (error) {
       toast.error("Failed to add contact!");
     }
-
     form.reset();
   };
 

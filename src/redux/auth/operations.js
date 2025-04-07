@@ -1,17 +1,30 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-axios.defaults.baseURL = "https://connections-api.goit.global";
+const BASE_URL = "https://connections-api.goit.global";
+
+axios.defaults.baseURL = BASE_URL;
 
 const setAuthHeader = (token) => {
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-  localStorage.setItem("token", token);
 };
 
 const clearAuthHeader = () => {
   axios.defaults.headers.common.Authorization = "";
-  localStorage.removeItem("token");
 };
+
+export const register = createAsyncThunk(
+  "auth/register",
+  async (credentials, thunkAPI) => {
+    try {
+      const { data } = await axios.post("/users/signup", credentials);
+      setAuthHeader(data.token);
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
 
 export const login = createAsyncThunk(
   "auth/login",
@@ -21,9 +34,7 @@ export const login = createAsyncThunk(
       setAuthHeader(data.token);
       return data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(
-        error.response?.data?.message || error.message
-      );
+      return thunkAPI.rejectWithValue(error.message);
     }
   }
 );
@@ -41,10 +52,10 @@ export const refreshUser = createAsyncThunk(
   "auth/refresh",
   async (_, thunkAPI) => {
     const state = thunkAPI.getState();
-    const persistedToken = localStorage.getItem("token");
+    const persistedToken = state.auth.token;
 
     if (!persistedToken) {
-      return thunkAPI.rejectWithValue("No token found");
+      return thunkAPI.rejectWithValue("Unable to fetch user");
     }
 
     try {
@@ -53,21 +64,6 @@ export const refreshUser = createAsyncThunk(
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
-    }
-  }
-);
-
-export const register = createAsyncThunk(
-  "auth/register",
-  async (credentials, thunkAPI) => {
-    try {
-      const { data } = await axios.post("/users/signup", credentials);
-      setAuthHeader(data.token);
-      return data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(
-        error.response?.data?.message || error.message
-      );
     }
   }
 );

@@ -12,13 +12,10 @@ const ContactForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     let newErrors = { name: "", number: "" };
-
     if (!name.trim()) {
       newErrors.name = "Required";
     }
-
     if (!number.trim()) {
       newErrors.number = "Required";
     } else if (!/^\+?\d{7,15}$/.test(number)) {
@@ -42,7 +39,6 @@ const ContactForm = () => {
     }
 
     dispatch(addContact({ name, number }));
-
     setName("");
     setNumber("");
     setErrors({ name: "", number: "" });
@@ -59,7 +55,6 @@ const ContactForm = () => {
         />
         {errors.name && <p className={styles.error}>{errors.name}</p>}
       </label>
-
       <label>
         Number:
         <input
@@ -69,7 +64,6 @@ const ContactForm = () => {
         />
         {errors.number && <p className={styles.error}>{errors.number}</p>}
       </label>
-
       <button type="submit">Add Contact</button>
     </form>
   );

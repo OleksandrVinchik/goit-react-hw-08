@@ -5,6 +5,7 @@ import {
   deleteContact,
   updateContact,
 } from "./operations";
+import { logout } from "../auth/operations";
 
 const contactsSlice = createSlice({
   name: "contacts",
@@ -39,6 +40,9 @@ const contactsSlice = createSlice({
         state.items = state.items.map((contact) =>
           contact.id === action.payload.id ? action.payload : contact
         );
+      })
+      .addCase(logout.fulfilled, (state) => {
+        state.items = [];
       });
   },
 });
